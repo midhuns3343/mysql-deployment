@@ -1,0 +1,46 @@
+mysqlRootPassword: rootpassword
+mysqlUser: user
+mysqlPassword: password
+mysqlDatabase: mydb
+replicaCount: 3
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 10Gi
+vault:
+  enabled: true
+  agent:
+    enabled: true
+    config:
+      templates:
+        - type: "mysql-creds"
+          format: "yaml"
+          actions:
+            - type: "inject"
+              dest: "/vault/secrets/mysql-creds.yaml"
+          source:
+            path: "database/creds/my-role"
+            field_map:
+              username: "username"
+              password: "password"
+        - type: "mysql-creds"
+          format: "yaml"
+          actions:
+            - type: "write"
+              dest: "/vault/secrets/mysql-creds.yaml"
+          source:
+            path: "database/creds/my-role"
+            field_map:
+              username: "username"
+              password: "password"
+      auth:
+        method: "kubernetes"
+        kubernetes:
+          role: "my-app"
+          jwt:
+            secretName: "vault-auth"
+            roleClaim: "kubernetes.io/role"
+            boundServiceAccountNames: ["default"]
+          serviceAccount:
+            name: "default"
+
