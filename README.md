@@ -43,6 +43,6 @@ helm install my-mysql bitnami/mysql -f values.yaml
 
   This will install MySQL with the specified values and enable the Vault Agent Injector with the specified configuration.
 
-  Once the chart is installed, you can verify that the MySQL credentials have been populated in the mysql-creds Kubernetes.
+  Once the chart is installed, you can verify that the MySQL credentials have been populated in the mysql-creds secret.
 
 
