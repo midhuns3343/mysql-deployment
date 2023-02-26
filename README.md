@@ -3,11 +3,11 @@ MySQL is deployed from Bitnami Helm chart https://github.com/bitnami/charts/tree
 
     Add the Hashicorp Helm repository:
 
-#helm repo add hashicorp https://helm.releases.hashicorp.com
+helm repo add hashicorp https://helm.releases.hashicorp.com
 
     Install the Vault Agent Injector Helm chart:
 
-#helm install vault hashicorp/vault \
+helm install vault hashicorp/vault \
   --set "server.dev.enabled=true" \
   --set "injector.externalVaultAddr=http://vault.default.svc:8200" \
   --set "injector.authMethod=kubernetes" \
@@ -16,7 +16,7 @@ MySQL is deployed from Bitnami Helm chart https://github.com/bitnami/charts/tree
 
     Create a Kubernetes Secret that contains the Vault AppRole credentials:
 
-#kubectl create secret generic vault-approle \
+kubectl create secret generic vault-approle \
   --from-literal=vault_role_id=<role_id> \
   --from-literal=vault_secret_id=<secret_id>
 
@@ -31,13 +31,15 @@ EOF
 
    Create a Kubernetes Secret that will hold the MySQL credentials:
 
-#kubectl create secret generic mysql-creds
+kubectl create secret generic mysql-creds
 
    Create values.yaml file with deployment parameters
 
    Install the MySQL Helm chart:
 
-#helm install my-mysql bitnami/mysql -f values.yaml
+helm repo add my-repo https://charts.bitnami.com/bitnami
+
+helm install my-mysql bitnami/mysql -f values.yaml
 
   This will install MySQL with the specified values and enable the Vault Agent Injector with the specified configuration.
 
