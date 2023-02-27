@@ -1,6 +1,14 @@
 This chart will deploy a MySQL instance with 3 replica with database credentials dynamically injected during deployment from Hashicorp vault.
 MySQL is deployed from Bitnami Helm chart https://github.com/bitnami/charts/tree/main/bitnami/mysql
 
+
+Prerequisites
+
+    Kubernetes 1.19+
+    Helm 3.2.0+
+    PV provisioner support in the underlying infrastructure
+
+
     Add the Hashicorp Helm repository:
 
 helm repo add hashicorp https://helm.releases.hashicorp.com
